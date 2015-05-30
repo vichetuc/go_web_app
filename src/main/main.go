@@ -2,11 +2,15 @@ package main
 
 import "net/http"
 
-func main() {
-	http.HandleFunc("/", someFunc)
-	http.ListenAndServe(":8080", nil)
+type person struct {
+	name string
 }
 
-func someFunc(w http.ResponseWriter, req *http.Request) {
-	w.Write([]byte ("Hello world!"))
+func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("First Name " + p.name))
+}
+
+func main() {
+	personOne := &person{name: "Julio"}
+	http.ListenAndServe(":8080", personOne)
 }
