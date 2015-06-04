@@ -8,13 +8,8 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
+	"github.com/juliofarah/go_web_app/api/models"
 )
-
-type Greeting struct {
-	Author  string
-	Content string
-	Date    time.Time
-}
 
 func init() {
 	http.HandleFunc("/", root)
@@ -28,7 +23,7 @@ func guestbookKey(context appengine.Context) *datastore.Key {
 func root(w http.ResponseWriter, r *http.Request) {
 	context := appengine.NewContext(r)
 	query := datastore.NewQuery("Greeting").Ancestor(guestbookKey(context)).Order("-Date").Limit(10)
-	greetings := make([]Greeting, 0, 10)
+	greetings := make([]models.Greeting, 0, 10)
 	if _, err := query.GetAll(context, &greetings); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -62,7 +57,7 @@ var guestbookTemplate = template.Must(template.New("book").Parse(`
 
 func sign(w http.ResponseWriter, r *http.Request) {
 	context := appengine.NewContext(r)
-	greeting := Greeting{
+	greeting := models.Greeting{
 		Content: r.FormValue("content"),
 		Date:    time.Now(),
 	}
