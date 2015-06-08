@@ -16,3 +16,7 @@ It contains a few thoughts about my Golang studies, such as challenges and cool 
 
 I took a lot of time to figure out how to parse an extracted HTML file to use in one of the routes/controller.
 The solution was found in this Stack Overflow issue: http://stackoverflow.com/questions/17206467/go-how-to-render-multiple-templates-in-golang.
+
+
+##Cool stuff:
+* nothing to put here yet =P
