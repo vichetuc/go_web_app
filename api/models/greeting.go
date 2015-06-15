@@ -15,5 +15,9 @@ type Greeting struct {
 type Greetings []*Greeting
 
 func (this Greetings) ByAuthor(author string) *db.Query {
-	return db.QueryFor(new(Greeting)).Filter("Author=", author)
+	return db.From(new(Greeting)).Filter("Author=", author)
+}
+
+func (this Greetings) GetAll() *db.Query {
+	return db.From(new(Greeting))
 }
