@@ -6,14 +6,16 @@ import (
 	"time"
 	"appengine/user"
 	"github.com/drborges/datastore-model"
+	"github.com/gin-gonic/gin"
 )
 
-func Sign(w http.ResponseWriter, r *http.Request) {
+func Sign(c *gin.Context) {
 
-	context := appengine.NewContext(r)
+	request := c.Request
+	context := appengine.NewContext(request)
 
 	greeting := new(models.Greeting)
-	greeting.Content = r.FormValue("content")
+	greeting.Content = request.FormValue("content")
 	greeting.Date = time.Now()
 
 	if u := user.Current(context); u != nil {
@@ -21,10 +23,10 @@ func Sign(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := db.NewDatastore(context).Create(greeting); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	http.Redirect(w, r, "/", http.StatusFound)
+	http.Redirect(c.Writer, request, "/", http.StatusFound)
 }
 

@@ -7,7 +7,7 @@ import (
 
 type Greeting struct {
 	db.Model 	      `db:"Greetings"`
-	Author  string
+	Author  string	  `json:"author"`
 	Content string    `json:"content" db:id`
 	Date    time.Time
 }
