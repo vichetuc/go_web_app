@@ -21,3 +21,13 @@ func (this Greetings) ByAuthor(author string) *db.Query {
 func (this Greetings) GetAll() *db.Query {
 	return db.From(new(Greeting))
 }
+
+func (this Greetings) New(content string, user string) *Greeting {
+	greeting := new(Greeting)
+	greeting.Content = content
+	greeting.Date = time.Now()
+	greeting.Author = user
+
+	return greeting
+}
+
