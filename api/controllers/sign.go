@@ -26,7 +26,6 @@ func Sign(c *gin.Context) {
 		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	http.Redirect(c.Writer, request, "/", http.StatusFound)
+	c.Redirect(301, "/")
 }
 

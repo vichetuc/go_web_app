@@ -6,7 +6,6 @@ import (
 	"github.com/juliofarah/go_web_app/api/models"
 	"html/template"
 	"github.com/drborges/datastore-model"
-	"log"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,13 +15,10 @@ var templates = template.Must(template.ParseGlob("../api/views/*.html"))
 func AllGreetings(c *gin.Context) {
 
 	context := appengine.NewContext(c.Request)
-
 	greetings := models.Greetings{}
 
 	if err := db.NewDatastore(context).Query(greetings.GetAll()).All(&greetings); err != nil {
 		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
-	} else {
-		printGreetings(greetings)
 	}
 
 	if err := templates.ExecuteTemplate(c.Writer, "guestbookPage", greetings); err != nil {
@@ -31,8 +27,10 @@ func AllGreetings(c *gin.Context) {
 }
 
 func GreetingsToJson(c *gin.Context) {
+
 	context := appengine.NewContext(c.Request)
 	greetings := models.Greetings{}
+
 	if err := db.NewDatastore(context).Query(greetings.GetAll()).All(&greetings); err != nil {
 		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
 	} else {
@@ -40,9 +38,3 @@ func GreetingsToJson(c *gin.Context) {
 	}
 }
 
-func printGreetings(greetings models.Greetings) {
-	for _, greeting := range greetings {
-		log.Println("Author: " + greeting.Author)
-		log.Println("Content: " + greeting.Content)
-	}
-}
