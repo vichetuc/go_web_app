@@ -13,6 +13,7 @@ func init() {
 	r.GET("/", controllers.AllGreetings)
 	r.GET("/json", controllers.GreetingsToJson)
 	r.POST("/sign", controllers.Sign)
+	r.POST("/new", controllers.New)
 
 	http.Handle("/", r)
 }
