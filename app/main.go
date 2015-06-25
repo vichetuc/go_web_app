@@ -10,9 +10,7 @@ func init() {
 
 	r := gin.New()
 
-	r.GET("/", controllers.AllGreetings)
-	r.GET("/json", controllers.GreetingsToJson)
-	r.POST("/sign", controllers.Sign)
+	r.GET("/greetings/all", controllers.GreetingsToJson)
 	r.POST("/new", controllers.New)
 
 	http.Handle("/", r)
