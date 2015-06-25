@@ -11,7 +11,7 @@ func init() {
 	r := gin.New()
 
 	r.GET("/greetings/all", controllers.GreetingsToJson)
-	r.POST("/new", controllers.New)
+	r.POST("/greetings/new", controllers.New)
 
 	http.Handle("/", r)
 }
