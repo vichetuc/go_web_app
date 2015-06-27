@@ -21,7 +21,7 @@ func New(c *gin.Context) {
 	c.BindJSON(&greeting)
 
 	if err := db.NewDatastore(context).Create(greeting); err != nil {
-		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
+		statusInternalServerError(c, err)
 		return
 	}
 }
@@ -32,9 +32,12 @@ func GreetingsToJson(c *gin.Context) {
 	greetings := models.Greetings{}
 
 	if err := db.NewDatastore(context).Query(greetings.GetAll()).All(&greetings); err != nil {
-		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
+		statusInternalServerError(c, err)
 	} else {
 		c.JSON(http.StatusOK, greetings)
 	}
 }
 
+func statusInternalServerError(c *gin.Context, err error) {
+	http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
+}
