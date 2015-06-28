@@ -6,19 +6,18 @@ import (
 	"github.com/juliofarah/go_web_app/api/models"
 	"github.com/drborges/datastore-model"
 	"github.com/gin-gonic/gin"
+	"github.com/juliofarah/go_web_app/api/modelAndView"
 )
 
-func New(c *gin.Context) {
+func Create(c *gin.Context) {
+	//can I extract context and datastore ?
 	context := appengine.NewContext(c.Request)
-
-	//how to fix it?
-	//understand whats the difference between calling a method that returns a Greeting
-	//and creating a models.Greeting{}
-
-	greetingParams := models.GreetingAsForm{}
+	greetingParams := modelAndView.GreetingAsForm{}
 
 	c.Bind(&greetingParams)
 
+	//understand the difference between new(Greeting)
+	//and variable := Greeting{}
 	greetings := models.Greetings{}
 	greeting := greetings.New(greetingParams.Author, greetingParams.Content)
 
@@ -30,7 +29,7 @@ func New(c *gin.Context) {
 
 }
 
-func AllGreetings(c *gin.Context) {
+func List(c *gin.Context) {
 
 	context := appengine.NewContext(c.Request)
 	greetings := models.Greetings{}

@@ -10,8 +10,8 @@ func init() {
 
 	r := gin.Default()
 
-	r.GET("/greetings", controllers.AllGreetings)
-	r.POST("/greetings", controllers.New)
+	r.GET("/greetings", controllers.List)
+	r.POST("/greetings", controllers.Create)
 
 	r.Static("/", "../static")
 
