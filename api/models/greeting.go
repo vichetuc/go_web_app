@@ -12,6 +12,11 @@ type Greeting struct {
 	Date    time.Time
 }
 
+type GreetingAsForm struct {
+	Author  string	  `form:"author" binding:"required"`
+	Content string    `form:"content" binding:"required"`
+}
+
 type Greetings []*Greeting
 
 func (this Greetings) ByAuthor(author string) *db.Query {

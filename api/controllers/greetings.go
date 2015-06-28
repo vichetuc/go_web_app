@@ -9,24 +9,28 @@ import (
 )
 
 func New(c *gin.Context) {
-
 	context := appengine.NewContext(c.Request)
 
-	greetings := models.Greetings{}
 	//how to fix it?
 	//understand whats the difference between calling a method that returns a Greeting
 	//and creating a models.Greeting{}
-	greeting := greetings.New("", "")
 
-	c.BindJSON(&greeting)
+	greetingParams := models.GreetingAsForm{}
+
+	c.Bind(&greetingParams)
+
+	greetings := models.Greetings{}
+	greeting := greetings.New(greetingParams.Author, greetingParams.Content)
 
 	if err := db.NewDatastore(context).Create(greeting); err != nil {
 		statusInternalServerError(c, err)
 		return
 	}
+	c.String(201, "")
+
 }
 
-func GreetingsToJson(c *gin.Context) {
+func AllGreetings(c *gin.Context) {
 
 	context := appengine.NewContext(c.Request)
 	greetings := models.Greetings{}
