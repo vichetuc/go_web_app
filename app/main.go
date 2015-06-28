@@ -8,10 +8,12 @@ import (
 
 func init() {
 
-	r := gin.New()
+	r := gin.Default()
 
-	r.GET("/greetings/all", controllers.GreetingsToJson)
-	r.POST("/greetings/new", controllers.New)
+	r.GET("/greetings", controllers.AllGreetings)
+	r.POST("/greetings", controllers.New)
+
+	r.Static("/", "../static")
 
 	http.Handle("/", r)
 }
