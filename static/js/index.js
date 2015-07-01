@@ -10,3 +10,11 @@ $(document).ready(function() {
 function greeetingTemplate(greeting) {
     return "<li>" + greeting.author + ":" + greeting.content +"</li>";
 }
+
+function postGreeting() {
+    var data = $("#new-greeting-form").serializeArray();
+    $.post("/greetings", data, function() {
+        console.log(data);
+        console.log("did it work?");
+    }, "json");
+}
